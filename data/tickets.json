@@ -1,0 +1,66 @@
+{
+    "1": {
+        "id": "1",
+        "title": "Website Login Issue",
+        "description": "Users are unable to log in to the website. Getting 500 error.",
+        "status": "open",
+        "priority": "high",
+        "assignee": "John Doe",
+        "createdBy": "admin",
+        "createdAt": "2024-01-15T10:30:00Z",
+        "updatedAt": "2024-01-15T10:30:00Z",
+        "dueDate": "2024-01-20T17:00:00Z",
+        "tags": [
+            "bug",
+            "authentication"
+        ]
+    },
+    "2": {
+        "id": "2",
+        "title": "Feature Request: Dark Mode",
+        "description": "Add dark mode toggle to the application interface.",
+        "status": "in-progress",
+        "priority": "medium",
+        "assignee": "Jane Smith",
+        "createdBy": "user",
+        "createdAt": "2024-01-14T14:20:00Z",
+        "updatedAt": "2024-01-16T09:15:00Z",
+        "dueDate": "2024-01-25T17:00:00Z",
+        "tags": [
+            "feature",
+            "ui"
+        ]
+    },
+    "3": {
+        "id": "3",
+        "title": "Database Performance",
+        "description": "Database queries are running slowly on the reports page.",
+        "status": "resolved",
+        "priority": "high",
+        "assignee": "Mike Johnson",
+        "createdBy": "admin",
+        "createdAt": "2024-01-10T08:45:00Z",
+        "updatedAt": "2024-01-16T16:30:00Z",
+        "dueDate": "2024-01-18T17:00:00Z",
+        "tags": [
+            "performance",
+            "database"
+        ]
+    },
+    "4": {
+        "id": "4",
+        "title": "Mobile Responsiveness",
+        "description": "Fix mobile layout issues on the dashboard page.",
+        "status": "closed",
+        "priority": "medium",
+        "assignee": "Sarah Wilson",
+        "createdBy": "user",
+        "createdAt": "2024-01-08T11:15:00Z",
+        "updatedAt": "2024-01-12T14:20:00Z",
+        "dueDate": "2024-01-15T17:00:00Z",
+        "tags": [
+            "mobile",
+            "responsive"
+        ]
+    }
+}

@@ -1,0 +1,465 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ app_name }} - Professional Ticket Management{% endblock %}
+
+{% block content %}
+<div class="landing-page">
+    <div class="circle-background">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+        <div class="circle circle-4"></div>
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-icon">TM</div>
+                    <h1 class="logo-text">{{ app_name }}</h1>
+                </div>
+
+                <!-- Auth Buttons -->
+                <div class="auth-buttons">
+                    <button class="btn btn-outline" onclick="showLogin()">Sign In</button>
+                    <button class="btn btn-primary" onclick="showRegister()">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <!-- Left Content -->
+                <div class="hero-left">
+                    <div class="trust-badge">
+                        <i class="fas fa-star"></i>
+                        Trusted by 50+ companies worldwide
+                    </div>
+                    
+                    <h1 class="hero-title">Manage Tickets Like a Pro</h1>
+                    
+                    <p class="hero-description">
+                        The most powerful and intuitive ticket management system. 
+                        Streamline your support workflow, boost team productivity, 
+                        and deliver exceptional customer experiences.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <button class="btn btn-primary hero-btn" onclick="showRegister()">
+                            Get Started Free
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-outline hero-btn">
+                            Watch Demo
+                        </button>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="stats-grid">
+                        {% for stat in stats %}
+                        <div class="stat-item">
+                            <div class="stat-number">{{ stat.number }}</div>
+                            <div class="stat-label">{{ stat.label }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Right Content - Auth Form -->
+                <div class="hero-right">
+                    <div id="auth-container">
+                        <!-- Login Form -->
+                        <div id="login-form" class="auth-form">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title" style="text-align: center; margin-bottom: 8px">
+                                        Welcome Back
+                                    </h2>
+                                    <p style="text-align: center; color: var(--text-secondary)">
+                                        Sign in to your account to continue
+                                    </p>
+                                </div>
+
+                                <form id="login-form-element" onsubmit="handleLogin(event)">
+                                    <div id="login-errors" class="error-message" style="display: none;"></div>
+
+                                    <div class="form-group">
+                                        <label for="login-email" class="form-label">Email Address</label>
+                                        <div style="position: relative">
+                                            <i class="fas fa-envelope" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary)"></i>
+                                            <input
+                                                type="email"
+                                                id="login-email"
+                                                name="email"
+                                                class="form-input"
+                                                style="padding-left: 44px"
+                                                placeholder="Enter your email"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="login-password" class="form-label">Password</label>
+                                        <div style="position: relative">
+                                            <i class="fas fa-lock" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary)"></i>
+                                            <input
+                                                type="password"
+                                                id="login-password"
+                                                name="password"
+                                                class="form-input"
+                                                style="padding-left: 44px; padding-right: 44px"
+                                                placeholder="Enter your password"
+                                                required
+                                            />
+                                            <button
+                                                type="button"
+                                                onclick="togglePassword('login-password')"
+                                                class="password-toggle"
+                                            >
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 16px">
+                                        <span id="login-loading" style="display: none;">
+                                            <div class="spinner"></div>
+                                            Signing In...
+                                        </span>
+                                        <span id="login-text">Sign In</span>
+                                    </button>
+
+                                    <div style="text-align: center">
+                                        <p style="color: var(--text-secondary); margin-bottom: 8px">
+                                            Don't have an account?
+                                        </p>
+                                        <button type="button" onclick="showRegister()" class="btn btn-outline" style="width: 100%">
+                                            Create Account
+                                        </button>
+                                    </div>
+                                </form>
+
+                                <div class="demo-accounts">
+                                    <p style="font-weight: 600; margin-bottom: 8px">Demo Accounts:</p>
+                                    <p><strong>Admin:</strong> admin@ticketmanager.com / admin123</p>
+                                    <p><strong>User:</strong> user@ticketmanager.com / user123</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Register Form -->
+                        <div id="register-form" class="auth-form" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="card-title" style="text-align: center; margin-bottom: 8px">
+                                        Create Account
+                                    </h2>
+                                    <p style="text-align: center; color: var(--text-secondary)">
+                                        Join us and start managing your tickets
+                                    </p>
+                                </div>
+
+                                <form id="register-form-element" onsubmit="handleRegister(event)">
+                                    <div id="register-errors" class="error-message" style="display: none;"></div>
+
+                                    <div class="form-group">
+                                        <label for="register-name" class="form-label">Full Name</label>
+                                        <div style="position: relative">
+                                            <i class="fas fa-user" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary)"></i>
+                                            <input
+                                                type="text"
+                                                id="register-name"
+                                                name="name"
+                                                class="form-input"
+                                                style="padding-left: 44px"
+                                                placeholder="Enter your full name"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="register-email" class="form-label">Email Address</label>
+                                        <div style="position: relative">
+                                            <i class="fas fa-envelope" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary)"></i>
+                                            <input
+                                                type="email"
+                                                id="register-email"
+                                                name="email"
+                                                class="form-input"
+                                                style="padding-left: 44px"
+                                                placeholder="Enter your email"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="register-password" class="form-label">Password</label>
+                                        <div style="position: relative">
+                                            <i class="fas fa-lock" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary)"></i>
+                                            <input
+                                                type="password"
+                                                id="register-password"
+                                                name="password"
+                                                class="form-input"
+                                                style="padding-left: 44px; padding-right: 44px"
+                                                placeholder="Create a password"
+                                                required
+                                            />
+                                            <button
+                                                type="button"
+                                                onclick="togglePassword('register-password')"
+                                                class="password-toggle"
+                                            >
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="register-confirm-password" class="form-label">Confirm Password</label>
+                                        <div style="position: relative">
+                                            <i class="fas fa-lock" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary)"></i>
+                                            <input
+                                                type="password"
+                                                id="register-confirm-password"
+                                                name="confirmPassword"
+                                                class="form-input"
+                                                style="padding-left: 44px; padding-right: 44px"
+                                                placeholder="Confirm your password"
+                                                required
+                                            />
+                                            <button
+                                                type="button"
+                                                onclick="togglePassword('register-confirm-password')"
+                                                class="password-toggle"
+                                            >
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 16px">
+                                        <span id="register-loading" style="display: none;">
+                                            <div class="spinner"></div>
+                                            Creating Account...
+                                        </span>
+                                        <span id="register-text">Create Account</span>
+                                    </button>
+
+                                    <div style="text-align: center">
+                                        <p style="color: var(--text-secondary); margin-bottom: 8px">
+                                            Already have an account?
+                                        </p>
+                                        <button type="button" onclick="showLogin()" class="btn btn-outline" style="width: 100%">
+                                            Sign In
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="wave-background">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="wave-svg">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="url(#gradient1)"></path>
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="url(#gradient2)" opacity="0.5"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="url(#gradient3)" opacity="0.25"></path>
+                <defs>
+                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#6366f1"></stop>
+                        <stop offset="100%" stop-color="#8b5cf6"></stop>
+                    </linearGradient>
+                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#8b5cf6"></stop>
+                        <stop offset="100%" stop-color="#ec4899"></stop>
+                    </linearGradient>
+                    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ec4899"></stop>
+                        <stop offset="100%" stop-color="#f59e0b"></stop>
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-header">
+                <h2 class="features-title">Everything You Need</h2>
+                <p class="features-description">
+                    Powerful features designed to streamline your ticket management 
+                    and boost your team's productivity.
+                </p>
+            </div>
+            
+            <div class="features-grid">
+                {% for feature in features %}
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-{{ feature.icon }}"></i>
+                    </div>
+                    <h3 class="feature-title">{{ feature.title }}</h3>
+                    <p class="feature-description">{{ feature.description }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Get Started?</h2>
+            <p class="cta-description">
+                Join thousands of teams already using {{ app_name }} to streamline 
+                their support operations and deliver better customer experiences.
+            </p>
+            <div class="cta-actions">
+                <button class="btn cta-btn-primary" onclick="showRegister()">
+                    Start Free Trial
+                    <i class="fas fa-trending-up"></i>
+                </button>
+                <button class="btn cta-btn-secondary">
+                    Contact Sales
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-icon">TM</div>
+                    <span class="footer-text">{{ app_name }}</span>
+                </div>
+                <p class="footer-copyright">
+                    © 2024 {{ app_name }}. Built with React, Vue, and Twig. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentForm = 'login';
+
+function showLogin() {
+    document.getElementById('login-form').style.display = 'block';
+    document.getElementById('register-form').style.display = 'none';
+    currentForm = 'login';
+}
+
+function showRegister() {
+    document.getElementById('login-form').style.display = 'none';
+    document.getElementById('register-form').style.display = 'block';
+    currentForm = 'register';
+}
+
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const icon = input.nextElementSibling.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+
+async function handleLogin(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    formData.append('_token', '{{ csrf_token }}');
+    
+    const loginLoading = document.getElementById('login-loading');
+    const loginText = document.getElementById('login-text');
+    const errorsDiv = document.getElementById('login-errors');
+    
+    loginLoading.style.display = 'flex';
+    loginText.style.display = 'none';
+    errorsDiv.style.display = 'none';
+    
+    try {
+        const response = await fetch('/auth/login', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            window.location.href = data.redirect;
+        } else {
+            errorsDiv.textContent = data.error || 'Login failed';
+            errorsDiv.style.display = 'flex';
+        }
+    } catch (error) {
+        errorsDiv.textContent = 'An error occurred. Please try again.';
+        errorsDiv.style.display = 'flex';
+    } finally {
+        loginLoading.style.display = 'none';
+        loginText.style.display = 'inline';
+    }
+}
+
+async function handleRegister(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const formData = new FormData(form);
+    formData.append('_token', '{{ csrf_token }}');
+    
+    const registerLoading = document.getElementById('register-loading');
+    const registerText = document.getElementById('register-text');
+    const errorsDiv = document.getElementById('register-errors');
+    
+    registerLoading.style.display = 'flex';
+    registerText.style.display = 'none';
+    errorsDiv.style.display = 'none';
+    
+    try {
+        const response = await fetch('/auth/register', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            window.location.href = data.redirect;
+        } else {
+            errorsDiv.textContent = data.error || 'Registration failed';
+            errorsDiv.style.display = 'flex';
+        }
+    } catch (error) {
+        errorsDiv.textContent = 'An error occurred. Please try again.';
+        errorsDiv.style.display = 'flex';
+    } finally {
+        registerLoading.style.display = 'none';
+        registerText.style.display = 'inline';
+    }
+}
+</script>
+{% endblock %}

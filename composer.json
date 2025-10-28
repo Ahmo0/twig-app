@@ -1,0 +1,30 @@
+{
+  "name": "ticket-manager/twig",
+  "description": "Professional Ticket Management System - Twig/PHP Implementation",
+  "type": "project",
+  "require": {
+    "php": ">=8.0",
+    "twig/twig": "^3.0",
+    "symfony/http-foundation": "^6.0",
+    "symfony/routing": "^6.0",
+    "symfony/console": "^6.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "TicketManager\\": "src/"
+    }
+  },
+  "scripts": {
+    "serve": "php -S localhost:3002 -t public",
+    "build": "composer install --no-dev --optimize-autoloader"
+  },
+  "config": {
+    "optimize-autoloader": true
+  },
+  "keywords": ["twig", "php", "ticket-management", "mvc"],
+  "author": "Frontend Architect",
+  "license": "MIT"
+}
